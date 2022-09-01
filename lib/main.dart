@@ -415,125 +415,124 @@ class _Task3ScreenState extends State<Task3Screen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            InkWell(
-              splashColor: Colors.grey,
-              onTap: (){
-                Room item = rooms[currentIndex];
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>RoomItem(item)
-                ));
-              },
-              child: Card(
-                elevation: 8,
-                color: Colors.white,
-                child: Container(
-                  height: 200,
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Image.network(
-                                rooms[currentIndex].image,
-                                height: 100),
-                            Text(
-                              rooms[currentIndex].name,
-                              style: const TextStyle(
+        child: ListView(
+          children: rooms.map((room) =>  InkWell(
+            splashColor: Colors.grey,
+            onTap: (){
+              Room item = room;
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>RoomItem(item)
+              ));
+            },
+            child: Card(
+              elevation: 8,
+              color: Colors.white,
+              child: Container(
+                height: 200,
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Image.network(
+                              room.image,
+                              height: 100),
+                          Text(
+                            room.name,
+                            style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.orange
-                              ),
                             ),
-                            const Icon(Icons.arrow_drop_up_sharp),
-                          ],
-                        ),
+                          ),
+                          const Icon(Icons.arrow_drop_up_sharp),
+                        ],
                       ),
-                      Text(
-                        rooms[currentIndex].descriptions,
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                        ),
+                    ),
+                    Text(
+                      room.descriptions,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            InkWell(
-              splashColor: Colors.grey,
-              onTap: (){
-                Room item = rooms[currentIndex+1];
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>RoomItem(item)
-                ));
-              },
-              child: Card(
-                elevation: 8,
-                color: Colors.white,
-                child: Container(
-                  height: 200,
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Image.network(
-                              rooms[currentIndex+1].image,
-                                height: 100,
-                            ),
-                            Text(
-                              rooms[currentIndex+1].name,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orange
-                              ),
-                            ),
-                            const Icon(Icons.arrow_drop_up_sharp),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        rooms[currentIndex+1].descriptions,
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: OutlinedButton(
-                  onPressed: (){
-                    setState(() {
-                      if(currentIndex < 3)
-                        currentIndex= currentIndex + 2;
-                      else
-                        currentIndex = 0;
-                    });
-                  },
-                  child: const Text(
-                    'Next',
-                    style:  TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orange
-                  ),)),
-            ),
-          ],
+          ),
+          ).toList(),
         ),
       ),
+            // InkWell(
+            //   splashColor: Colors.grey,
+            //   onTap: (){
+            //     Room item = rooms[currentIndex+1];
+            //     Navigator.push(context, MaterialPageRoute(builder: (context)=>RoomItem(item)
+            //     ));
+            //   },
+            //   child: Card(
+            //     elevation: 8,
+            //     color: Colors.white,
+            //     child: Container(
+            //       height: 200,
+            //       width: double.infinity,
+            //       child: Column(
+            //         children: [
+            //           Padding(
+            //             padding: const EdgeInsets.all(20.0),
+            //             child: Row(
+            //               mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //               children: [
+            //                 Image.network(
+            //                   rooms[currentIndex+1].image,
+            //                     height: 100,
+            //                 ),
+            //                 Text(
+            //                   rooms[currentIndex+1].name,
+            //                   style: const TextStyle(
+            //                     fontSize: 20,
+            //                     fontWeight: FontWeight.bold,
+            //                     color: Colors.orange
+            //                   ),
+            //                 ),
+            //                 const Icon(Icons.arrow_drop_up_sharp),
+            //               ],
+            //             ),
+            //           ),
+            //           Text(
+            //             rooms[currentIndex+1].descriptions,
+            //             style: const TextStyle(
+            //                 fontSize: 16,
+            //                 fontWeight: FontWeight.bold,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 20.0),
+            //   child: OutlinedButton(
+            //       onPressed: (){
+            //         setState(() {
+            //           if(currentIndex < 3)
+            //             currentIndex= currentIndex + 2;
+            //           else
+            //             currentIndex = 0;
+            //         });
+            //       },
+            //       child: const Text(
+            //         'Next',
+            //         style:  TextStyle(
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.bold,
+            //           color: Colors.orange
+            //       ),)),
+            // ),
     );
   }
 }
@@ -569,6 +568,196 @@ class Task4Screen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class Task5Screen extends StatefulWidget {
+  const Task5Screen({Key? key}) : super(key: key);
+
+  @override
+  State<Task5Screen> createState() => _Task5ScreenState();
+}
+
+class _Task5ScreenState extends State<Task5Screen> {
+  int selected = 0;
+
+  List<String> appBarTitle = [
+    'Home',
+    'Movies List',
+    'Search',
+  ];
+
+  List<Widget> screens =[
+    Center(child: Text('Home Screen'),),
+    filmsGrid(),
+    Center(child: Text('Search'),),
+  ];
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(appBarTitle[selected]),
+      ),
+      body: screens[selected],
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.orange,
+        unselectedItemColor: Colors.black54,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        type: BottomNavigationBarType.shifting,
+        onTap: (index){
+          setState(() {
+            selected = index;
+          });
+        },
+        currentIndex: selected,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home,),
+              label: 'Home',
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.list,),
+              label: 'List',
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.search,),
+              label: 'fillter',
+          ),
+        ],
+      ),
+      drawer: Drawer(
+        child: SafeArea(
+          child: Column(
+            children: [
+              ListTile(
+                title: const Text('Profile'),
+                onTap: () {Navigator.push(context,
+                    MaterialPageRoute(
+                        builder:(context)=> drawerItem('Profile')));},
+              ),
+              ListTile(
+                title: const Text('Login'),
+                onTap: () {Navigator.push(context,
+                    MaterialPageRoute(
+                        builder:(context)=> drawerItem('Login')));},
+              ),
+              ListTile(
+                title: const Text('Sign up'),
+                onTap: () {Navigator.push(context,
+                    MaterialPageRoute(
+                        builder:(context)=> drawerItem('Sign up')));},
+              ),
+              ListTile(
+                title: const Text('Setting'),
+                onTap: () {Navigator.push(context,
+                    MaterialPageRoute(
+                        builder:(context)=> drawerItem('Setting')));},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  Widget drawerItem(String title)=>Scaffold(
+    appBar: AppBar(
+      title: Text(title),
+    ),
+    body: Center(
+      child:Text(title,
+        style:  const TextStyle(
+          fontSize: 24
+        ),
+      ),
+    ),
+  );
+}
+
+Widget filmsGrid() {
+
+  return GridView(
+  padding: EdgeInsets.all(20.0),
+  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2,
+      childAspectRatio: 2/3,
+  ),
+  children: [
+    gridItem(),
+    gridItem(),
+    gridItem(),
+    gridItem(),
+    gridItem(),
+    gridItem(),
+  ],
+);
+}
+Widget gridItem()=> Padding(
+  padding: const EdgeInsets.all(8.0),
+  child:   Column(
+
+    children: [
+
+      Expanded(
+
+        child: Image(
+
+          fit: BoxFit.cover,
+
+          image: NetworkImage('https://d1csarkz8obe9u.cloudfront.net/posterpreviews/action-movie-poster-template-design-0f5fff6262fdefb855e3a9a3f0fdd361_screen.jpg?ts=1636996054'),
+
+        ),
+
+      ),
+
+      Padding(
+
+        padding: const EdgeInsets.only(top: 8.0),
+
+        child: Row(
+
+          children: [
+
+            Text('Movie name'),
+
+            Spacer(),
+
+            Text('8.0'),
+
+            Icon(Icons.star_rate_rounded,color: Colors.amber,),
+
+          ],
+
+        ),
+
+      )
+
+    ],
+
+  ),
+);
+
+class Task6Screen extends StatefulWidget {
+  const Task6Screen({Key? key}) : super(key: key);
+
+  @override
+  State<Task6Screen> createState() => _Task6ScreenState();
+}
+
+class _Task6ScreenState extends State<Task6Screen> {
+
+  List<Widget> screens = [
+
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
     );
   }
 }
