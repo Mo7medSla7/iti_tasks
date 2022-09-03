@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.green,
       ),
       home: ToDoList(),
     );
@@ -592,30 +592,33 @@ class _Task5ScreenState extends State<Task5Screen> {
     'Search',
   ];
 
-  List<Widget> screens =[
+  late List<Widget> screens =[
     Center(child: Text('Home Screen'),),
     filmsGrid(movies),
     Center(child: Text('Search'),),
   ];
-  static List<Movie> movies = [];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   callApi(movies);
-  // }
-  callApi(var list) async{
-    List<Movie> movies = await HttpHelper.getMovies();
-    print(movies.length);
+  List<Movie> movies = [];
 
-    // setState((){
-    // list = movies;
-    // });
+
+  @override
+  void initState() {
+    callApi();
+    super.initState();
+  }
+
+  callApi() async{
+    var api = HttpHelper();
+    List<Movie> moviesTemp = await api.getMovies();
+    setState((){
+      movies = moviesTemp;
+      filmsGrid(movies);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    callApi(movies);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarTitle[selected]),
@@ -700,16 +703,17 @@ class _Task5ScreenState extends State<Task5Screen> {
 
 
 
-Widget filmsGrid(var items) {
+Widget filmsGrid(List<Movie> items) {
   // List<Movie> movies=[];
   // callApi(movies);
   return GridView.builder(
     itemCount: items.length,
-  padding: EdgeInsets.all(20.0),
-  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    padding: EdgeInsets.all(20.0),
+    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
       childAspectRatio: 2/3,
   ), itemBuilder: (BuildContext context, int index) {
+      print(items.length);
     return gridItem(items[index]);
   },
   );
@@ -760,3 +764,154 @@ Widget gridItem(Movie item)=> Padding(
 );
 
 
+class Task6Screen extends StatelessWidget {
+  const Task6Screen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  height: 350,
+                  width: double.infinity,
+                  child: Image.network('https://cdn.dribbble.com/users/1090020/screenshots/14218299/media/1ecb6705993dc024056b9d3b9a206f1a.png?compress=1&resize=400x300',
+                    fit: BoxFit.cover,),
+                ),
+              ),
+              const Text('Discover Your Dream Jop',
+                style:TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black
+                ) ,),
+              const Text('explore all the most exiting jops\n join now',style: TextStyle(color: Colors.black),textAlign: TextAlign.center,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(onPressed: (){}, child: const Text('Register')),
+                  ElevatedButton(
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder:
+                          (context){
+                        var nameController = TextEditingController();
+                        var passwordController = TextEditingController();
+                        var formKey = GlobalKey<FormState>();
+                        return Scaffold(
+                          backgroundColor: Colors.white,
+                          appBar: AppBar(title: const Text('Sign in')),
+                          body: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Form(
+                                key: formKey,
+                                child: ListView(
+                                  children: <Widget>[
+                                    Container(
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.all(10),
+                                        child: const Text(
+                                          'Sign in to your account',
+                                          style: TextStyle(
+                                              color: Colors.greenAccent,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 30),
+                                        )),
+                                    Container(
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.all(10),
+                                        child: const Text(
+                                          'Sign in',
+                                          style: TextStyle(fontSize: 20),
+                                        )),
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      child: TextFormField(
+                                        controller: nameController,
+                                        decoration: const InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          labelText: 'Email',
+                                          hintText: 'Example@gmail.com',
+                                        ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            const snack=SnackBar(content: Text('Please enter your email'));
+                                            ScaffoldMessenger.of(context).showSnackBar(snack);
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                      child: TextFormField(
+                                        obscureText: true,
+                                        controller: passwordController,
+                                        enableSuggestions: false,
+                                        autocorrect: false,
+                                        decoration: const InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          labelText: 'Password',
+                                          hintText: '*********',
+                                        ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            const snack=SnackBar(content: Text('Please enter your password'));
+                                            ScaffoldMessenger.of(context).showSnackBar(snack);
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                      },
+                                      child: const Text(
+                                        'Forgot Password',
+                                      ),
+                                    ),
+                                    Container(
+                                        height: 50,
+                                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                        child: ElevatedButton(
+                                          child: const Text('Login'),
+                                          onPressed: () {
+                                            formKey.currentState?.validate();
+                                          },
+                                        )),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        const Text('Does not have account?'),
+                                        TextButton(
+                                          child: const Text(
+                                            'Register',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                          onPressed: () {
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )),
+                        );
+                      }
+                      ));
+                    }, child: const Text('Login'),                      style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((states) => Colors.green),),),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

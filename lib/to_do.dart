@@ -72,7 +72,8 @@ class ToDoList extends StatelessWidget {
                     child: Card(
                       color: Colors.white,
                       child: CheckboxListTile(
-                        // selected: model.isChecked[index] ,
+                        activeColor: Colors.purple,
+                        selected: model.isChecked[index] ,
                         value: model.isChecked[index] ,
                         title: Text(model.tasks[index].taskName,
                           style: model.tasks[index].isDone ?
