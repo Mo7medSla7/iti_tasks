@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:iti_flutter/helpers/http_helper.dart';
 import 'package:iti_flutter/models/rooms_model.dart';
+import 'package:iti_flutter/to_do.dart';
+
+import 'models/movie_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: const Task4Screen(),
+      home: ToDoList(),
     );
   }
 }
@@ -590,13 +594,28 @@ class _Task5ScreenState extends State<Task5Screen> {
 
   List<Widget> screens =[
     Center(child: Text('Home Screen'),),
-    filmsGrid(),
+    filmsGrid(movies),
     Center(child: Text('Search'),),
   ];
+  static List<Movie> movies = [];
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   callApi(movies);
+  // }
+  callApi(var list) async{
+    List<Movie> movies = await HttpHelper.getMovies();
+    print(movies.length);
+
+    // setState((){
+    // list = movies;
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
+    callApi(movies);
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarTitle[selected]),
@@ -679,25 +698,23 @@ class _Task5ScreenState extends State<Task5Screen> {
   );
 }
 
-Widget filmsGrid() {
 
-  return GridView(
+
+Widget filmsGrid(var items) {
+  // List<Movie> movies=[];
+  // callApi(movies);
+  return GridView.builder(
+    itemCount: items.length,
   padding: EdgeInsets.all(20.0),
   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
       childAspectRatio: 2/3,
-  ),
-  children: [
-    gridItem(),
-    gridItem(),
-    gridItem(),
-    gridItem(),
-    gridItem(),
-    gridItem(),
-  ],
-);
+  ), itemBuilder: (BuildContext context, int index) {
+    return gridItem(items[index]);
+  },
+  );
 }
-Widget gridItem()=> Padding(
+Widget gridItem(Movie item)=> Padding(
   padding: const EdgeInsets.all(8.0),
   child:   Column(
 
@@ -709,7 +726,7 @@ Widget gridItem()=> Padding(
 
           fit: BoxFit.cover,
 
-          image: NetworkImage('https://d1csarkz8obe9u.cloudfront.net/posterpreviews/action-movie-poster-template-design-0f5fff6262fdefb855e3a9a3f0fdd361_screen.jpg?ts=1636996054'),
+          image: NetworkImage(item.image),
 
         ),
 
@@ -723,11 +740,11 @@ Widget gridItem()=> Padding(
 
           children: [
 
-            Text('Movie name'),
+            Text(item.title),
 
             Spacer(),
 
-            Text('8.0'),
+            Text(item.vote),
 
             Icon(Icons.star_rate_rounded,color: Colors.amber,),
 
@@ -742,23 +759,4 @@ Widget gridItem()=> Padding(
   ),
 );
 
-class Task6Screen extends StatefulWidget {
-  const Task6Screen({Key? key}) : super(key: key);
-
-  @override
-  State<Task6Screen> createState() => _Task6ScreenState();
-}
-
-class _Task6ScreenState extends State<Task6Screen> {
-
-  List<Widget> screens = [
-
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-    );
-  }
-}
 
