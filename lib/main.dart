@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.orange,
       ),
-      home: ToDoList(),
+      home: Task5Screen(),
     );
   }
 }
@@ -592,11 +592,6 @@ class _Task5ScreenState extends State<Task5Screen> {
     'Search',
   ];
 
-  late List<Widget> screens =[
-    Center(child: Text('Home Screen'),),
-    filmsGrid(movies),
-    Center(child: Text('Search'),),
-  ];
 
   List<Movie> movies = [];
 
@@ -618,6 +613,12 @@ class _Task5ScreenState extends State<Task5Screen> {
 
   @override
   Widget build(BuildContext context) {
+
+    late List<Widget> screens =[
+      Center(child: Text('Home Screen'),),
+      filmsGrid(movies),
+      Center(child: Text('Search'),),
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -708,12 +709,11 @@ Widget filmsGrid(List<Movie> items) {
   // callApi(movies);
   return GridView.builder(
     itemCount: items.length,
-    padding: EdgeInsets.all(20.0),
+    padding: const EdgeInsets.all(20.0),
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
       childAspectRatio: 2/3,
   ), itemBuilder: (BuildContext context, int index) {
-      print(items.length);
     return gridItem(items[index]);
   },
   );
@@ -726,15 +726,15 @@ Widget gridItem(Movie item)=> Padding(
 
       Expanded(
 
-        child: Image(
+          child: Image(
 
-          fit: BoxFit.cover,
+            fit: BoxFit.cover,
 
-          image: NetworkImage(item.image),
+            image: NetworkImage(item.image),
 
+          ),
         ),
 
-      ),
 
       Padding(
 
@@ -744,11 +744,11 @@ Widget gridItem(Movie item)=> Padding(
 
           children: [
 
-            Text(item.title),
+            Expanded(child: Text(item.title,overflow: TextOverflow.ellipsis,)),
 
-            Spacer(),
+            // Spacer(),
 
-            Text(item.vote),
+            Text(item.vote.toString()),
 
             Icon(Icons.star_rate_rounded,color: Colors.amber,),
 
